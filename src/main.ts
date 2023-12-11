@@ -1,6 +1,8 @@
 import './style.scss'
+
 const textElement = document.getElementById('text') as HTMLElement;
 const optionButtonsElement = document.getElementById('option-buttons') as HTMLElement;
+
 
 interface State {
   salt?: boolean;
@@ -34,7 +36,7 @@ const showTextContent = (textIndex: number) => {
   });
 };
 
-const showOption = (option: { requiredState?: keyof State; setState?: State }) => {
+const showOption = (option: { requiredState?: keyof State; setState?: State; }) => {
   const { requiredState } = option;
 
   if (requiredState !== undefined) {
@@ -56,7 +58,7 @@ const selectOption = (option: { nextText: number; setState?: State }) => {
 const textInfos: {
   id: number;
   text: string;
-  options: { text: string; requiredState?: keyof State; nextText: number; setState?: State }[];
+  options: { text: string; requiredState?: keyof State; nextText: number; setState?: State;}[];
 }[] = [
   {
     id: 1,
@@ -165,7 +167,7 @@ const textInfos: {
     id: 11,
     text: 'You threw your bag of salt at the aliens and they exploded. After the dust settled you saw the aliens were destroyed. The whole world congratulated you and you recieve a medal of honour!',
     options: [
-      { text: 'Congratulations. Play Again.', nextText: -1 },
+      { text: 'Congratulations. Play Again.', nextText: -1},
     ],
   },
 ];
