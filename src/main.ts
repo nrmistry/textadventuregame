@@ -3,7 +3,6 @@ import './style.scss'
 const textElement = document.getElementById('text') as HTMLElement;
 const optionButtonsElement = document.getElementById('option-buttons') as HTMLElement;
 
-
 interface State {
   salt?: boolean;
   rayGun?: boolean;
@@ -14,29 +13,55 @@ let state: State = {};
 
 const startGame = () => {
   state = {};
-  showTextContent(1);
+  showStorySelection();
 };
 
-const showTextContent = (textIndex: number) => {
-  const textInfo = textInfos.find((text) => text.id === textIndex)!;
-  textElement.innerText = textInfo.text;
+const showStorySelection = () => {
+  textElement.innerText = 'Choose Your Adventure:';
+  clearOptionButtons();
+  const buttonStory1 = createOptionButton('Alien Adventure', () => startStory(textInfos));
+  const buttonStory2 = createOptionButton('Fairytale Adventure', () => startStory(textInfosSecondStory));
+  optionButtonsElement.appendChild(buttonStory1);
+  optionButtonsElement.appendChild(buttonStory2);
+};
 
-  while (optionButtonsElement.firstChild) {
-    optionButtonsElement.removeChild(optionButtonsElement.firstChild);
+const startStory = (story: typeof textInfos) => {
+  showTextContent(1, story);
+};
+
+const showTextContent = (textIndex: number, story: typeof textInfos) => {
+  const textInfo = story.find((text) => text.id === textIndex);
+
+  if (!textInfo) {
+    console.error(`Text node with ID ${textIndex} not found.`);
+    return;
   }
 
+  textElement.innerText = textInfo.text;
+
+  clearOptionButtons();
+
   textInfo.options.forEach((option) => {
-    if (showOption(option)) {
-      const button = document.createElement('button');
-      button.innerText = option.text;
-      button.classList.add('btn');
-      button.addEventListener('click', () => selectOption(option));
-      optionButtonsElement.appendChild(button);
-    }
+    const button = createOptionButton(option.text, () => selectOption(option, story));
+    optionButtonsElement.appendChild(button);
   });
 };
 
-const showOption = (option: { requiredState?: keyof State; setState?: State; }) => {
+const clearOptionButtons = () => {
+  while (optionButtonsElement.firstChild) {
+    optionButtonsElement.removeChild(optionButtonsElement.firstChild);
+  }
+};
+
+const createOptionButton = (text: string, onClick: () => void) => {
+  const button = document.createElement('button');
+  button.innerText = text;
+  button.classList.add('btn');
+  button.addEventListener('click', onClick);
+  return button;
+};
+
+/*const showOption = (option: { requiredState?: keyof State; setState?: State }) => {
   const { requiredState } = option;
 
   if (requiredState !== undefined) {
@@ -45,15 +70,28 @@ const showOption = (option: { requiredState?: keyof State; setState?: State; }) 
 
   return true;
 };
+*/
 
-const selectOption = (option: { nextText: number; setState?: State }) => {
+const selectOption = (
+  option: { nextText: number; setState?: State; onSelected?: () => void },
+  story: typeof textInfos
+) => {
   const nextTextInfoId = option.nextText;
+
   if (nextTextInfoId <= 0) {
     return startGame();
   }
+
   state = { ...state, ...option.setState };
-  showTextContent(nextTextInfoId);
+
+  if (option.onSelected) {
+    option.onSelected();
+  }
+
+  showTextContent(nextTextInfoId, story);
 };
+
+//text info array for first story
 
 const textInfos: {
   id: number;
@@ -171,5 +209,124 @@ const textInfos: {
     ],
   },
 ];
+
+const textInfosSecondStory: {
+  id: number;
+  text: string;
+  options: { text: string; requiredState?: keyof State; nextText: number; setState?: State; onSelected?: () => void }[];
+}[] = [
+  {
+    id: 1,
+    text: "The sun is shining in the meadow. You look down and see a hand held mirror.",
+    options: [
+      { text: 'Take the mirror', setState: { salt: true }, nextText: 2 },
+      { text: 'Leave the mirror.', nextText: 4 },
+    ],
+  },
+  {
+    id: 2,
+    text: 'The mirror speaks to you, telling you it can grant you any wish',
+    options: [
+      {
+        text: 'Wish for more wishes.',
+        requiredState: 'salt',
+        setState: { salt: false, rayGun: true },
+        nextText: 3,
+      },
+      {
+        text: 'Wish for happiness..',
+        requiredState: 'salt',
+        setState: { salt: false, cloakingDevice: true },
+        nextText: 3,
+      },
+      {
+        text: "Don't wish for anything.",
+        nextText: 4,
+      },
+    ],
+  },
+  {
+    id: 3,
+    text: 'The mirror laughs evily, you become scared.',
+    options: [
+      { text: "Chuck the mirror away and hope it doesn't work", nextText: 4 },
+      { text: 'Wait to see what the mirror has in store', nextText: 5 },
+      { text: 'Ask to take back your wish.', nextText: 6 },
+    ],
+  },
+  {
+    id: 4,
+    text: 'Without anyone to hold it, the genie escapes from the mirror trapping you inside.',
+    options: [
+      { text: 'Restart', nextText: -1 },
+    ],
+  },
+  {
+    id: 5,
+    text: "The genie thrives on fear, he ruins your whole life and you're left all alone never to be seen again.",
+    options: [
+      { text: 'Restart', nextText: -1 },
+    ],
+  },
+  {
+    id: 6,
+    text: 'The genie has never had anyone say this before and so instead grants you another wish, this time promising to be kind.',
+    options: [
+      { text: 'Make another wish', nextText: 7 },
+    ],
+  },
+  {
+    id: 7,
+    text: "You realise the genie is living a sad lonely life.",
+    options: [
+      { text: 'Wish for the genie to be free', nextText: 8 },
+      {
+        text: 'Wish for everyone to have one wish, including him. .',
+        requiredState: 'rayGun',
+        nextText: 9,
+      },
+      {
+        text: 'Wish for the end of genies',
+        requiredState: 'cloakingDevice',
+        nextText: 10,
+      },
+      {
+        text: 'Ask to save the wish for later',
+        requiredState: 'salt',
+        nextText: 11,
+      },
+    ],
+  },
+  {
+    id: 8,
+    text: 'The genie becomes free and unleashes havoc on the rest of the world as payback for being trapped for so long',
+    options: [
+      { text: 'Restart', nextText: -1 },
+    ],
+  },
+  {
+    id: 9,
+    text: "There's too many people in the world. THe genie gets overwhelemd and self-combusts.",
+    options: [
+      { text: 'Restart', nextText: -1 },
+    ],
+  },
+  {
+    id: 10,
+    text: "The wish didn't free the genies but made them cease to exist. You go to jail.",
+    options: [
+      { text: 'Restart', nextText: -1 },
+    ],
+  },
+  {
+    id: 11,
+    text: "You have succesffuly tricked the genie. You don't make another wish. The genie is trapped inside forever and you're free to live happily ever after.",
+    options: [
+      { text: 'Congratulations. Play Again.', nextText: -1},
+    ],
+  },
+]
+
+
 
 startGame();
