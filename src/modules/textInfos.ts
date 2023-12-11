@@ -1,7 +1,7 @@
 import { State } from '../main';
 
 //TEXTINFO FOR THE STORIES 
-
+//FIRST 'STORY'
 export const textInfos: {
     id: number;
     text: string;
@@ -11,7 +11,7 @@ export const textInfos: {
       id: 1,
       text: 'You find yourself in a mysterious forest carrying a packet of salt. A pathway lies ahead of you.',
       options: [
-        { text: 'Take the salt.', setState: { salt: true }, nextText: 2 },
+        { text: 'Take the salt.', setState: { optionOne: true }, nextText: 2 },
         { text: 'Leave the salt.', nextText: 2 },
       ],
     },
@@ -21,14 +21,14 @@ export const textInfos: {
       options: [
         {
           text: 'Take the ray gun.',
-          requiredState: 'salt',
-          setState: { salt: false, rayGun: true },
+          requiredState: 'optionOne',
+          setState: { optionOne: false, optionTwo: true },
           nextText: 3,
         },
         {
           text: 'Take the cloaking device.',
-          requiredState: 'salt',
-          setState: { salt: false, cloakingDevice: true },
+          requiredState: 'optionOne',
+          setState: { optionOne: false, optionThree: true },
           nextText: 3,
         },
         {
@@ -74,17 +74,17 @@ export const textInfos: {
         { text: 'Try to run', nextText: 8 },
         {
           text: 'Attack it with your ray gun.',
-          requiredState: 'rayGun',
+          requiredState: 'optionTwo',
           nextText: 9,
         },
         {
           text: 'Hide yourself using your cloaking device.',
-          requiredState: 'cloakingDevice',
+          requiredState: 'optionThree',
           nextText: 10,
         },
         {
           text: 'Throw the salt at them.',
-          requiredState: 'salt',
+          requiredState: 'optionOne',
           nextText: 11,
         },
       ],
@@ -118,6 +118,8 @@ export const textInfos: {
       ],
     },
   ];
+
+  //SECOND 'STORY'
   
   export const textInfosSecondStory: {
     id: number;
@@ -128,7 +130,7 @@ export const textInfos: {
       id: 1,
       text: "The sun is shining in the meadow. You look down and see a hand held mirror.",
       options: [
-        { text: 'Take the mirror', setState: { salt: true }, nextText: 2 },
+        { text: 'Take the mirror', setState: { optionOne: true }, nextText: 2 },
         { text: 'Leave the mirror.', nextText: 4 },
       ],
     },
@@ -138,14 +140,14 @@ export const textInfos: {
       options: [
         {
           text: 'Wish for more wishes.',
-          requiredState: 'salt',
-          setState: { salt: false, rayGun: true },
+          requiredState: 'optionOne',
+          setState: { optionOne: false, optionTwo: true },
           nextText: 3,
         },
         {
           text: 'Wish for happiness..',
-          requiredState: 'salt',
-          setState: { salt: false, cloakingDevice: true },
+          requiredState: 'optionOne',
+          setState: { optionOne: false, optionThree: true },
           nextText: 3,
         },
         {
@@ -191,17 +193,17 @@ export const textInfos: {
         { text: 'Wish for the genie to be free', nextText: 8 },
         {
           text: 'Wish for everyone to have one wish, including him. .',
-          requiredState: 'rayGun',
+          requiredState: 'optionTwo',
           nextText: 9,
         },
         {
           text: 'Wish for the end of genies',
-          requiredState: 'cloakingDevice',
+          requiredState: 'optionThree',
           nextText: 10,
         },
         {
           text: 'Ask to save the wish for later',
-          requiredState: 'salt',
+          requiredState: 'optionOne',
           nextText: 11,
         },
       ],

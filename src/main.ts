@@ -9,9 +9,9 @@ const optionButtonsElement = document.getElementById('option-buttons') as HTMLEl
 //TYPES 
 
 export interface State {
-  salt?: boolean;
-  rayGun?: boolean;
-  cloakingDevice?: boolean;
+  optionOne?: boolean;
+  optionTwo?: boolean;
+  optionThree?: boolean;
 }
 
 let state: State = {};
@@ -39,7 +39,7 @@ const showTextContent = (textIndex: number, story: typeof textInfos) => {
   const textInfo = story.find((text) => text.id === textIndex);
 
   if (!textInfo) {
-    console.error(`Text node with ID ${textIndex} not found.`);
+    console.error(`Text info with ID ${textIndex} not found.`);
     return;
   }
 
