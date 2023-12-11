@@ -1,16 +1,23 @@
 {
   "name": "textadventuregame",
+  "homepage": "https//nrmistry.github.io/textadventuregame",
+  "author": "nilum-mistry",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.6.4",
     "sass": "^1.69.5",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.2"
   }
 }
