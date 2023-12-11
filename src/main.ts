@@ -23,7 +23,7 @@ const startGame = () => {
 
 // CREATE DISPLAY TWO OPTIONS FOR STORY
 const showStorySelection = () => {
-  textElement.innerText = 'Choose Your Adventure:';
+  textElement.innerText = 'Choose Your Adventure, will you survive...';
   clearOptionButtons();
   const buttonStory1 = createOptionButton('Alien Adventure', () => startStory(textInfos));
   const buttonStory2 = createOptionButton('Fairytale Adventure', () => startStory(textInfosSecondStory));
