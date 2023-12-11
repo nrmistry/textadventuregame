@@ -1,44 +1,68 @@
+@use "./styles/variables" as *;
+
+
 * {
-  font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #f8f8f8; 
+}
+
+body {
+  font-family: $font-family2;
+  background-color: $colorOne;
+  color: $colorTwo;
 }
 
 .container {
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-  background-color: #fff; 
+  background-color: $colorFour;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
 }
 
-.text {
+.container__title {
+  font-family: $font-family1;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: $colorThree;
+}
+
+.container__text {
   font-size: 1.2rem;
   margin-bottom: 20px;
 }
 
-.option-buttons {
+.container__btn-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); 
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+
+        &:hover {
+          background-color: $colorFour;
+        }
+
+
+#option-buttons{
+  background-color: $colorThree;
+  color: $colorTwo;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: $font-family2;
+
 }
-
-.btn {
-  & {
-    background-color: #3498db;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  &:hover {
-    background-color: #2980b9;
-  }
+      
 }
 
 @media screen and (max-width: 600px) {
@@ -46,15 +70,15 @@
     padding: 10px;
   }
 
-  .text {
+  .container__text {
     font-size: 1rem;
   }
 
-  .option-buttons {
-    grid-template-columns: 1fr; 
+  .container__btn-grid {
+    grid-template-columns: 1fr;
   }
 
-  .btn {
+  .container__btn-grid--btn {
     padding: 8px 12px;
   }
 }
